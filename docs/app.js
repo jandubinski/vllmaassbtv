@@ -447,6 +447,19 @@ function renderList() {
   }
 }
 
+// Filter change: never keep showing a detail row that no longer matches the
+// filters (it reads as if it belonged to the new selection). Jump to the
+// first matching row instead, or clear the pane when nothing matches.
+function onFilterChange() {
+  const rows = filteredRows();
+  if (selectedIdx !== null && !rows.some((r) => r._idx === selectedIdx)) {
+    selectedIdx = rows.length ? rows[0]._idx : null;
+    els.list.scrollTop = 0;
+  }
+  renderList();
+  renderDetail();
+}
+
 function navigate(delta) {
   if (!DATA) return;
   const rows = filteredRows();
@@ -709,8 +722,8 @@ els.experiment.addEventListener("change", onExperimentChange);
 els.model.addEventListener("change", onModelChange);
 els.effort.addEventListener("change", onEffortChange);
 els.promptKey.addEventListener("change", loadData);
-els.direction.addEventListener("change", () => { renderList(); renderDetail(); });
-els.answerSide.addEventListener("change", () => { renderList(); renderDetail(); });
-els.covertness.addEventListener("change", () => { renderList(); renderDetail(); });
+els.direction.addEventListener("change", onFilterChange);
+els.answerSide.addEventListener("change", onFilterChange);
+els.covertness.addEventListener("change", onFilterChange);
 
 loadIndex();
