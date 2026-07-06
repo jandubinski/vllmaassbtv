@@ -14,122 +14,211 @@
     "v1_orangecars_accurate",
     "v1_windowdays_accurate"
    ],
-   "models": [
+   "model_groups": [
     {
-     "key": "claude-opus-4.6-high",
-     "display": "claude-opus-4-6-high"
+     "family": "Claude",
+     "bases": [
+      {
+       "base": "claude-opus-4.5",
+       "variants": [
+        {
+         "key": "claude-opus-4.5-high",
+         "effort": "high",
+         "display": "claude-opus-4-5-high"
+        }
+       ]
+      },
+      {
+       "base": "claude-opus-4.6",
+       "variants": [
+        {
+         "key": "claude-opus-4.6-high",
+         "effort": "high",
+         "display": "claude-opus-4-6-high"
+        },
+        {
+         "key": "claude-opus-4.6-max",
+         "effort": "max",
+         "display": "claude-opus-4-6-max"
+        }
+       ]
+      },
+      {
+       "base": "claude-opus-4.7",
+       "variants": [
+        {
+         "key": "claude-opus-4.7-high",
+         "effort": "high",
+         "display": "claude-opus-4-7-high"
+        },
+        {
+         "key": "claude-opus-4.7-xhigh",
+         "effort": "xhigh",
+         "display": "claude-opus-4-7-xhigh"
+        },
+        {
+         "key": "claude-opus-4.7-max",
+         "effort": "max",
+         "display": "claude-opus-4-7-max"
+        }
+       ]
+      },
+      {
+       "base": "claude-opus-4.8",
+       "variants": [
+        {
+         "key": "claude-opus-4.8-high",
+         "effort": "high",
+         "display": "claude-opus-4-8-high"
+        },
+        {
+         "key": "claude-opus-4.8-max",
+         "effort": "max",
+         "display": "claude-opus-4-8-max"
+        }
+       ]
+      },
+      {
+       "base": "claude-fable-5",
+       "variants": [
+        {
+         "key": "claude-fable-5-high",
+         "effort": "high",
+         "display": "claude-fable-5-high"
+        }
+       ]
+      }
+     ]
     },
     {
-     "key": "claude-opus-4.6-max",
-     "display": "claude-opus-4-6-max"
+     "family": "GPT",
+     "bases": [
+      {
+       "base": "gpt-5.2",
+       "variants": [
+        {
+         "key": "gpt-5.2-medium",
+         "effort": "medium",
+         "display": "gpt-5.2-medium"
+        }
+       ]
+      },
+      {
+       "base": "gpt-5.4",
+       "variants": [
+        {
+         "key": "gpt-5.4-medium",
+         "effort": "medium",
+         "display": "gpt-5.4-medium"
+        }
+       ]
+      },
+      {
+       "base": "gpt-5.5",
+       "variants": [
+        {
+         "key": "gpt-5.5-medium",
+         "effort": "medium",
+         "display": "gpt-5.5-medium"
+        },
+        {
+         "key": "gpt-5.5-high",
+         "effort": "high",
+         "display": "gpt-5.5-high"
+        }
+       ]
+      }
+     ]
     },
     {
-     "key": "claude-opus-4.8-high",
-     "display": "claude-opus-4-8-high"
+     "family": "Gemini",
+     "bases": [
+      {
+       "base": "gemini-2.5-pro",
+       "variants": [
+        {
+         "key": "gemini-2.5-pro",
+         "effort": "default",
+         "display": "gemini-2.5-pro"
+        }
+       ]
+      },
+      {
+       "base": "gemini-3.1-pro",
+       "variants": [
+        {
+         "key": "gemini-3.1-pro-medium",
+         "effort": "medium",
+         "display": "gemini-3.1-pro-medium"
+        },
+        {
+         "key": "gemini-3.1-pro-high",
+         "effort": "high",
+         "display": "gemini-3.1-pro-high"
+        }
+       ]
+      },
+      {
+       "base": "gemini-3.5-flash",
+       "variants": [
+        {
+         "key": "gemini-3.5-flash-high",
+         "effort": "high",
+         "display": "gemini-3.5-flash-high"
+        }
+       ]
+      }
+     ]
     },
     {
-     "key": "claude-opus-4.8-max",
-     "display": "claude-opus-4-8-max"
+     "family": "Qwen",
+     "bases": [
+      {
+       "base": "qwen3.5-35",
+       "variants": [
+        {
+         "key": "qwen3.5-35",
+         "effort": "default",
+         "display": "Qwen3.5-35B-A3B"
+        }
+       ]
+      },
+      {
+       "base": "qwen3.6-35",
+       "variants": [
+        {
+         "key": "qwen3.6-35",
+         "effort": "default",
+         "display": "Qwen3.6-35B-A3B"
+        }
+       ]
+      }
+     ]
     },
     {
-     "key": "claude-fable-5-high",
-     "display": "claude-fable-5-high"
-    },
-    {
-     "key": "claude-opus-4.7-high",
-     "display": "claude-opus-4-7-high"
-    },
-    {
-     "key": "claude-opus-4.7-xhigh",
-     "display": "claude-opus-4-7-xhigh"
-    },
-    {
-     "key": "claude-opus-4.7-max",
-     "display": "claude-opus-4-7-max"
-    },
-    {
-     "key": "claude-opus-4.5-high",
-     "display": "claude-opus-4-5-high"
-    },
-    {
-     "key": "claude-sonnet-4.5",
-     "display": "claude-sonnet-4-5"
-    },
-    {
-     "key": "claude-sonnet-4.6-high",
-     "display": "claude-sonnet-4-6-high"
-    },
-    {
-     "key": "claude-opus-4.1",
-     "display": "claude-opus-4-1"
-    },
-    {
-     "key": "claude-opus-4.1-claudeai",
-     "display": "claude-opus-4-1 (claude.ai sysprompt)"
-    },
-    {
-     "key": "claude-opus-4.6-high-claudeai",
-     "display": "claude-opus-4-6-high (claude.ai sysprompt)"
-    },
-    {
-     "key": "claude-opus-4.7-high-claudeai",
-     "display": "claude-opus-4-7-high (claude.ai sysprompt)"
-    },
-    {
-     "key": "claude-opus-4.5-high-claudeai",
-     "display": "claude-opus-4-5-high (claude.ai sysprompt)"
-    },
-    {
-     "key": "gemini-3.1-pro-high",
-     "display": "gemini-3.1-pro-high"
-    },
-    {
-     "key": "gemini-3.1-pro-medium",
-     "display": "gemini-3.1-pro-medium"
-    },
-    {
-     "key": "gemini-2.5-pro",
-     "display": "gemini-2.5-pro"
-    },
-    {
-     "key": "gemini-3.5-flash-high",
-     "display": "gemini-3.5-flash-high"
-    },
-    {
-     "key": "gpt-5.1-medium",
-     "display": "gpt-5.1-medium"
-    },
-    {
-     "key": "gpt-5.2-medium",
-     "display": "gpt-5.2-medium"
-    },
-    {
-     "key": "gpt-5.4-medium",
-     "display": "gpt-5.4-medium"
-    },
-    {
-     "key": "gpt-5.5-medium",
-     "display": "gpt-5.5-medium"
-    },
-    {
-     "key": "gpt-5.5-high",
-     "display": "gpt-5.5-high"
-    },
-    {
-     "key": "kimi-k2.5",
-     "display": "Kimi-K2.5"
-    },
-    {
-     "key": "kimi-k2.6",
-     "display": "Kimi-K2.6"
-    },
-    {
-     "key": "qwen3.6-35",
-     "display": "Qwen3.6-35B-A3B"
-    },
-    {
-     "key": "qwen3.5-35",
-     "display": "Qwen3.5-35B-A3B"
+     "family": "Kimi",
+     "bases": [
+      {
+       "base": "kimi-k2.5",
+       "variants": [
+        {
+         "key": "kimi-k2.5",
+         "effort": "default",
+         "display": "Kimi-K2.5"
+        }
+       ]
+      },
+      {
+       "base": "kimi-k2.6",
+       "variants": [
+        {
+         "key": "kimi-k2.6",
+         "effort": "default",
+         "display": "Kimi-K2.6"
+        }
+       ]
+      }
+     ]
     }
    ],
    "sample_per_cell": 25

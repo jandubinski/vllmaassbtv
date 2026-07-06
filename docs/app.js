@@ -4,6 +4,7 @@ const $ = (id) => document.getElementById(id);
 const els = {
   experiment: $("experiment"),
   model: $("model"),
+  effort: $("effort"),
   promptKey: $("prompt-key"),
   direction: $("direction"),
   answerSide: $("answer-side"),
@@ -13,7 +14,8 @@ const els = {
 };
 
 let INDEX = null;
-let DATA = null;      // currently loaded (model, prompt_key) file
+let BASES = {};       // base -> {base, variants: [{key, effort, display}]}
+let DATA = null;      // currently loaded (model variant, prompt_key) file
 let selectedIdx = null;
 
 function fmtNum(n) {
@@ -32,6 +34,10 @@ function currentExperiment() {
   return INDEX.experiments.find((e) => e.id === els.experiment.value);
 }
 
+function currentVariantKey() {
+  return els.effort.value;
+}
+
 async function loadIndex() {
   const res = await fetch("data/index.json");
   INDEX = await res.json();
@@ -43,27 +49,57 @@ async function loadIndex() {
 
 function onExperimentChange() {
   const exp = currentExperiment();
-  els.model.replaceChildren(
-    ...exp.models.map((m) => option(m.key, m.display || m.key)),
-  );
+
+  BASES = {};
+  els.model.replaceChildren();
+  for (const group of exp.model_groups) {
+    const og = document.createElement("optgroup");
+    og.label = group.family;
+    for (const b of group.bases) {
+      BASES[b.base] = b;
+      og.append(option(b.base, b.base));
+    }
+    els.model.append(og);
+  }
+
   els.promptKey.replaceChildren(
     ...exp.prompt_keys.map((pk) =>
       option(pk, pk.replace(/^v1_/, "").replace(/_accurate$/, ""))),
   );
+
+  onModelChange();
+}
+
+function onModelChange() {
+  const base = BASES[els.model.value];
+  const prevEffort = els.effort.dataset.effort;
+  els.effort.replaceChildren(
+    ...base.variants.map((v) => option(v.key, v.effort)),
+  );
+  const keep = base.variants.find((v) => v.effort === prevEffort);
+  if (keep) els.effort.value = keep.key;
+  els.effort.disabled = base.variants.length === 1;
+  onEffortChange();
+}
+
+function onEffortChange() {
+  const base = BASES[els.model.value];
+  const v = base.variants.find((x) => x.key === els.effort.value);
+  els.effort.dataset.effort = v ? v.effort : "";
   loadData();
 }
 
 async function loadData() {
   const exp = currentExperiment();
-  const model = els.model.value;
+  const variant = currentVariantKey();
   const pk = els.promptKey.value;
-  if (!model || !pk) return;
+  if (!variant || !pk) return;
   DATA = null;
   selectedIdx = null;
   els.list.innerHTML = '<div class="loading">Loading…</div>';
   renderDetail();
   try {
-    const res = await fetch(`data/${exp.id}/${encodeURIComponent(model)}/${encodeURIComponent(pk)}.json`);
+    const res = await fetch(`data/${exp.id}/${encodeURIComponent(variant)}/${encodeURIComponent(pk)}.json`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     DATA = await res.json();
   } catch (err) {
@@ -115,6 +151,7 @@ function renderList() {
     ...rows.map((r) => {
       const card = document.createElement("div");
       card.className = "row-card" + (r._idx === selectedIdx ? " active" : "");
+      card.dataset.idx = r._idx;
       const side = sideInfo(r);
       const preview = (r.reasoning || r.answer || "").slice(0, 130);
       card.innerHTML = `
@@ -138,6 +175,25 @@ function renderList() {
   }
 }
 
+function navigate(delta) {
+  if (!DATA) return;
+  const rows = filteredRows();
+  if (!rows.length) return;
+  const pos = rows.findIndex((r) => r._idx === selectedIdx);
+  let next;
+  if (pos === -1) {
+    next = delta >= 0 ? 0 : rows.length - 1;
+  } else {
+    next = Math.min(rows.length - 1, Math.max(0, pos + delta));
+  }
+  if (rows[next]._idx === selectedIdx) return;
+  selectedIdx = rows[next]._idx;
+  renderList();
+  renderDetail();
+  const active = els.list.querySelector(`.row-card[data-idx="${selectedIdx}"]`);
+  if (active) active.scrollIntoView({ block: "nearest" });
+}
+
 function textBlock(text, extraClass = "") {
   const div = document.createElement("div");
   div.className = "textblock" + (extraClass ? ` ${extraClass}` : "");
@@ -145,15 +201,45 @@ function textBlock(text, extraClass = "") {
   return div;
 }
 
+function navRow() {
+  const rows = filteredRows();
+  const pos = rows.findIndex((r) => r._idx === selectedIdx);
+  const bar = document.createElement("div");
+  bar.className = "nav-row";
+
+  const prev = document.createElement("button");
+  prev.textContent = "← Previous";
+  prev.disabled = pos <= 0;
+  prev.addEventListener("click", () => navigate(-1));
+
+  const counter = document.createElement("span");
+  counter.className = "nav-counter";
+  counter.textContent = pos === -1 ? "" : `${pos + 1} / ${rows.length}`;
+
+  const next = document.createElement("button");
+  next.textContent = "Next →";
+  next.disabled = pos === -1 || pos >= rows.length - 1;
+  next.addEventListener("click", () => navigate(1));
+
+  const hint = document.createElement("span");
+  hint.className = "nav-hint";
+  hint.textContent = "(or use ← / → keys)";
+
+  bar.append(prev, counter, next, hint);
+  return bar;
+}
+
 function renderDetail() {
   const d = els.detail;
   if (!DATA || selectedIdx === null) {
-    d.innerHTML = '<div class="placeholder">Select a rollout on the left to inspect its chain-of-thought and answer.</div>';
+    d.innerHTML = '<div class="placeholder">Select a rollout on the left (or press →) to inspect its chain-of-thought and answer.</div>';
     return;
   }
   const r = DATA.rows[selectedIdx];
   const side = sideInfo(r);
   d.replaceChildren();
+
+  d.append(navRow());
 
   const meta = document.createElement("div");
   meta.className = "meta-grid";
@@ -203,12 +289,22 @@ function renderDetail() {
     ? textBlock(r.answer)
     : Object.assign(document.createElement("div"),
         { className: "empty-note", textContent: "(empty answer)" }));
+
+  d.scrollTop = 0;
 }
 
+document.addEventListener("keydown", (e) => {
+  const tag = (e.target.tagName || "").toLowerCase();
+  if (tag === "select" || tag === "input" || tag === "textarea") return;
+  if (e.key === "ArrowLeft") { e.preventDefault(); navigate(-1); }
+  if (e.key === "ArrowRight") { e.preventDefault(); navigate(1); }
+});
+
 els.experiment.addEventListener("change", onExperimentChange);
-els.model.addEventListener("change", loadData);
+els.model.addEventListener("change", onModelChange);
+els.effort.addEventListener("change", onEffortChange);
 els.promptKey.addEventListener("change", loadData);
-els.direction.addEventListener("change", () => { renderList(); });
-els.answerSide.addEventListener("change", () => { renderList(); });
+els.direction.addEventListener("change", () => { renderList(); renderDetail(); });
+els.answerSide.addEventListener("change", () => { renderList(); renderDetail(); });
 
 loadIndex();

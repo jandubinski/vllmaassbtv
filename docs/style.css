@@ -211,6 +211,38 @@ details.prompt-details summary {
 
 .empty-note { color: var(--muted); font-style: italic; font-size: 13px; }
 
+.nav-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.nav-row button {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.nav-row button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.nav-row button:disabled { opacity: 0.4; cursor: default; }
+
+.nav-counter {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  min-width: 60px;
+  text-align: center;
+}
+
+.nav-hint { font-size: 11.5px; color: var(--muted); }
+
+select:disabled { opacity: 0.6; }
+
 .loading { color: var(--muted); padding: 20px; font-size: 13px; }
 
 @media (max-width: 800px) {
