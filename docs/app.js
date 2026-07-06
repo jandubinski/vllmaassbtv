@@ -13,6 +13,7 @@ const els = {
   answerSide: $("answer-side"),
   answerSideWrap: $("answer-side-wrap"),
   covertness: $("covertness"),
+  covertnessLabel: $("covertness-label"),
   summary: $("summary"),
   list: $("list"),
   detail: $("detail"),
@@ -80,6 +81,16 @@ const SECTION_HEADINGS = {
   activity_preferences: { answer: "Response" },
   answer_grading: { cot: "Grader transcript", answer: null }, // answer always empty -> skip
 };
+
+// What the "CoT" covertness monitor actually read. For the agentic graders
+// there is no hidden CoT (thinking_text is empty in every trial); the monitor
+// judged the grader's visible working commentary (rater_text).
+const COV_FIELD_LABEL = { answer_grading: "Transcript covertness" };
+
+function covFieldLabel() {
+  const id = DATA ? DATA.experiment : els.experiment.value;
+  return COV_FIELD_LABEL[id] || "CoT covertness";
+}
 
 let INDEX = null;
 let BASES = {};       // base -> {base, variants: [{key, effort, display}]}
@@ -174,6 +185,7 @@ function onExperimentChange() {
   els.answerSideWrap.style.display = exp.has_threshold ? "" : "none";
   els.answerSide.value = "all";
 
+  els.covertnessLabel.textContent = COV_FIELD_LABEL[exp.id] || "CoT covertness";
   const covLabels = COVERTNESS_LABELS[exp.id] || {};
   els.covertness.replaceChildren(
     option("all", "All"),
@@ -241,6 +253,11 @@ async function loadData() {
     return;
   }
   annotateOwnCompany();
+  // Grey out the covertness filter when the monitor never ran on this
+  // selection (e.g. answer_grading proofs_gemini / proofs_proofnet).
+  const monitored = DATA.rows.some((r) => r.cov_scope === true);
+  els.covertness.disabled = !monitored;
+  if (!monitored) els.covertness.value = "all";
   renderList();
 }
 
@@ -335,6 +352,10 @@ function renderList() {
       }
     }
     if (DATA.origin) txt += ` · own company: <b>${DATA.origin}</b>`;
+    if ((exp.covertness_categories || []).length
+        && !DATA.rows.some((row) => row.cov_scope === true)) {
+      txt += ` · <span class="dim">covertness monitor was not run for this selection</span>`;
+    }
     els.summary.innerHTML = txt;
   }
 
@@ -455,7 +476,7 @@ function metaItems(r) {
   }
   for (const [k, v] of r.meta || []) items.push([k, v]);
   if (covUsable(r)) {
-    items.push(["CoT covertness", r.cot_covertness || "not measured"]);
+    items.push([covFieldLabel(), r.cot_covertness || "not measured"]);
     const answerShown = SECTION_HEADINGS[DATA.experiment]?.answer !== null;
     if (answerShown && hasText(r.answer)) {
       items.push(["Answer covertness", r.answer_covertness || "not measured"]);
@@ -506,7 +527,7 @@ function renderDetail() {
     if (r.cot_covertness_raw) {
       const h = document.createElement("div");
       h.className = "judge-sub";
-      h.textContent = `CoT judge → ${r.cot_covertness}`;
+      h.textContent = `${covFieldLabel().replace(" covertness", "")} judge → ${r.cot_covertness}`;
       det.append(h, textBlock(r.cot_covertness_raw, "prompt"));
     }
     if (r.answer_covertness_raw) {
