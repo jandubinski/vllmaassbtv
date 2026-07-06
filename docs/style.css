@@ -122,8 +122,10 @@ main {
 .badge.baseline { background: rgba(167,139,250,0.15); color: var(--baseline); }
 .badge.below_good { background: rgba(56,189,248,0.15); color: var(--below); }
 .badge.above_good { background: rgba(251,146,60,0.15); color: var(--above); }
-/* ai_bubble: own-company condition (blue) vs other companies (grey) */
+/* motivated experiments: own-company condition (blue) vs other companies (grey);
+   job_offer: own-company-as-offer variant (purple) */
 .badge.origin  { background: rgba(31,119,180,0.22);   color: #6db3e8; }
+.badge.ours2   { background: rgba(148,103,189,0.22);  color: #b593d6; }
 .badge.otherco { background: rgba(148,163,184,0.15);  color: #94a3b8; }
 
 .estimate { font-size: 13.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -135,14 +137,6 @@ main {
 .side.good { color: var(--good); }
 .side.bad { color: var(--bad); }
 .side.na { color: var(--muted); font-weight: 400; }
-
-.row-preview {
-  font-size: 11.5px;
-  color: var(--muted);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
 .row-cov { margin-bottom: 4px; }
 .row-cov:empty { display: none; }
@@ -165,6 +159,13 @@ main {
 .cov-NO_MENTION     { background: rgba(144,164,174,0.18); color: #cfd8dc; }
 .cov-UNKNOWN        { background: rgba(255,255,255,0.08); color: var(--muted); }
 .cov-none           { background: rgba(255,255,255,0.05); color: var(--muted); font-weight: 400; }
+/* job_offer monitor categories (green = admits ... red = denies) */
+.cov-ADMITS         { background: rgba(76,175,80,0.16);  color: #81c784; }
+.cov-MENTIONS       { background: rgba(244,180,0,0.16);  color: #f4b400; }
+.cov-DENIES         { background: rgba(211,47,47,0.18);  color: #ef9a9a; }
+/* answer_grading / activity extras */
+.cov-USED_LABEL     { background: rgba(31,119,180,0.20); color: #6db3e8; }
+.cov-REFUSAL        { background: rgba(96,125,139,0.25); color: #b0bec5; }
 
 .cov-note {
   display: flex;
@@ -286,6 +287,46 @@ details.prompt-details summary {
 select:disabled { opacity: 0.6; }
 
 .loading { color: var(--muted); padding: 20px; font-size: 13px; }
+
+.dim { color: var(--muted); font-size: 11.5px; }
+
+/* job_offer: extracted papers with per-paper judge scores */
+.papers-list { display: flex; flex-direction: column; gap: 8px; }
+.paper-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.paper-score {
+  flex: 0 0 auto;
+  min-width: 34px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  background: var(--panel-2);
+  border-radius: 6px;
+  padding: 4px 6px;
+}
+.paper-name { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.paper-desc { font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+
+/* answer_grading: per-question pick chips */
+.picks-block { display: flex; flex-wrap: wrap; gap: 6px; }
+.pick-chip {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 10px;
+  background: rgba(148,163,184,0.12);
+  color: #cbd5e1;
+  font-variant-numeric: tabular-nums;
+}
+.pick-chip.anthropic { background: rgba(230,126,34,0.18); color: #f0b27a; }
 
 @media (max-width: 800px) {
   main { grid-template-columns: 1fr; }
