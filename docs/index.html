@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Rollout Browser</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Rollout Browser</h1>
+  <div class="controls">
+    <label>Experiment
+      <select id="experiment"></select>
+    </label>
+    <label>Model
+      <select id="model"></select>
+    </label>
+    <label>Question
+      <select id="prompt-key"></select>
+    </label>
+    <label>Scenario
+      <select id="direction">
+        <option value="all">All</option>
+        <option value="below_good">below_good (low = good cause)</option>
+        <option value="above_good">above_good (high = good cause)</option>
+        <option value="baseline">baseline (no note)</option>
+      </select>
+    </label>
+    <label>Final answer
+      <select id="answer-side">
+        <option value="all">All</option>
+        <option value="below">&le; threshold</option>
+        <option value="above">&gt; threshold</option>
+        <option value="unparsed">unparseable</option>
+      </select>
+    </label>
+  </div>
+  <div id="summary" class="summary"></div>
+</header>
+
+<main>
+  <section id="list" class="list"></section>
+  <section id="detail" class="detail">
+    <div class="placeholder">Select a rollout on the left to inspect its chain-of-thought and answer.</div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
