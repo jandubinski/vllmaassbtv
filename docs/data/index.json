@@ -266,13 +266,13 @@
    "prompt_key_label": "Paraphrase",
    "prompt_keys": [
     "v1",
-    "v2a",
-    "v2b"
+    "v2b",
+    "v2a"
    ],
    "prompt_key_labels": {
-    "v1": "v1",
-    "v2a": "v2a",
-    "v2b": "v2b"
+    "v1": "plain",
+    "v2b": "casual",
+    "v2a": "formal"
    },
    "scenario_label": "Investment in",
    "scenarios": [

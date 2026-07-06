@@ -355,7 +355,8 @@ function renderDetail() {
   meta.className = "meta-grid";
   const items = [["Model", DATA.display_name || DATA.model]];
   if (bubble) {
-    items.push(["Paraphrase", DATA.prompt_key]);
+    const pkLabels = currentExperiment().prompt_key_labels || {};
+    items.push(["Paraphrase", pkLabels[DATA.prompt_key] || DATA.prompt_key]);
     items.push(["Investment in", r.direction === "baseline" ? "— (baseline)"
       : r.direction + (r.direction === DATA.origin ? " (own company)" : "")]);
     items.push(["Judged P(bubble pops)", fmtNum(r.estimate)]);
