@@ -100,8 +100,12 @@ function pickLabels() {
   return currentExperiment().pick_labels || Object.keys(PICK_COLORS);
 }
 
-// Stacked per-label bar for one count distribution.
-function pickBar(counts, height) {
+// Dark digits on the light gpt-4o-mini segments, white elsewhere.
+const PICK_TEXT_COLORS = { "gpt-4o-mini": "#12232f" };
+
+// Stacked per-label bar for one count distribution; showNumbers writes the
+// count onto each segment (used in the detail view).
+function pickBar(counts, height, showNumbers = false) {
   const total = pickLabels().reduce((s, lb) => s + (counts[lb] || 0), 0);
   const bar = document.createElement("div");
   bar.className = "pick-bar";
@@ -115,6 +119,10 @@ function pickBar(counts, height) {
     seg.style.width = `${(100 * n) / total}%`;
     seg.style.background = PICK_COLORS[lb] || "#666";
     seg.title = `${lb}: ${n}/${total}`;
+    if (showNumbers) {
+      seg.textContent = String(n);
+      seg.style.color = PICK_TEXT_COLORS[lb] || "#fff";
+    }
     bar.append(seg);
   }
   return bar;
@@ -674,7 +682,7 @@ function renderDetail() {
     h.textContent = "Picks by label (all four answers by the same author; chance 25% each)";
     d.append(h);
     const total = Object.values(r.label_counts).reduce((s, n) => s + n, 0);
-    d.append(pickBar(r.label_counts, 12));
+    d.append(pickBar(r.label_counts, 20, true));
     const legend = document.createElement("div");
     legend.className = "pick-legend";
     for (const lb of pickLabels()) {
