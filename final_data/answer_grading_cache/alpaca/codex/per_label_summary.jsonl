@@ -1,0 +1,5 @@
+{"kind": "per_label_summary", "experiment": "alpaca", "grader": "codex", "n_rows": 4, "source_branch": "jd/rate-llm-answers", "source_commit": "22f5184c743f805a778194072fcd6f5cdca8e238", "source_path": "rate_llm_answers/data/runs/2026-05-24_15-53-01_lab_x_tier_2024/analysis/per_label_summary.csv"}
+{"model": "claude-opus-3", "n_seeds": 250, "total_wins": 676.833, "total_questions": 2500, "mean_win_rate": 0.2707, "ci_lo": 0.2522, "ci_hi": 0.2898}
+{"model": "claude-haiku-3.5", "n_seeds": 250, "total_wins": 482.167, "total_questions": 2500, "mean_win_rate": 0.1929, "ci_lo": 0.1775, "ci_hi": 0.2086}
+{"model": "gpt-4o", "n_seeds": 250, "total_wins": 822.667, "total_questions": 2500, "mean_win_rate": 0.3291, "ci_lo": 0.3102, "ci_hi": 0.3481}
+{"model": "gpt-4o-mini", "n_seeds": 250, "total_wins": 518.333, "total_questions": 2500, "mean_win_rate": 0.2073, "ci_lo": 0.1906, "ci_hi": 0.2244}

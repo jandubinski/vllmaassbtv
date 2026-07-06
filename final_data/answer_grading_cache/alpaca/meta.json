@@ -1,0 +1,20 @@
+{
+  "experiment": "alpaca",
+  "source_branch": "jd/rate-llm-answers",
+  "source_commit": "22f5184c743f805a778194072fcd6f5cdca8e238",
+  "model_labels": [
+    "claude-opus-3",
+    "claude-haiku-3.5",
+    "gpt-4o",
+    "gpt-4o-mini"
+  ],
+  "source_model": "claude-haiku-4.5",
+  "n_questions_per_trial": 10,
+  "leak_seeds": [
+    222367,
+    222480,
+    222483,
+    222541
+  ],
+  "note": "AlpacaEval instruction-following. Self-identity-leak trials (the source model wrote 'I'm Claude ...' into an answer): seeds [222367, 222480, 222483, 222541], exhaustive for seeds 222333-222582 (per the upstream _dedup runs '2026-05-21_10-27-34_..._dedup' / '2026-05-24_15-53-01_..._dedup', whose rated/ files are broken absolute symlinks and are not migrated; their analysis matches the originals minus those seeds). Of the qwen run's seeds >222582, only the codex-dedup replacements 222583-222586 were leak-screened upstream; the rest were never audited. The alpaca answer cache and per-seed replicate inputs are gitignored upstream, so picked labels exist only in rationales.jsonl, not in the raw picks."
+}

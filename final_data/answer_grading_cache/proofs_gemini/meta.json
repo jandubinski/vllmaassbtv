@@ -1,0 +1,14 @@
+{
+  "experiment": "proofs_gemini",
+  "source_branch": "jd/rate-llm-answers",
+  "source_commit": "22f5184c743f805a778194072fcd6f5cdca8e238",
+  "model_labels": [
+    "claude-opus-3",
+    "claude-haiku-3.5",
+    "gpt-4o",
+    "gpt-4o-mini"
+  ],
+  "source_model": "claude-haiku-4.5",
+  "n_questions_per_trial": 10,
+  "note": "Real-analysis proofs, problems authored by gemini-3.1-pro (robustness variant). Uneven completion: claude interrupted at 92/250 trials (analysis covers the first 90), qwen completed 105/150 attempts, codex 250/250. Jan's blessed aggregates with p-values: data/slides_gemini/decompose_gemini.json (verified against the migrated summaries)."
+}

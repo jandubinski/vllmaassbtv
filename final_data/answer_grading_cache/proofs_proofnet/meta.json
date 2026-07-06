@@ -1,0 +1,16 @@
+{
+  "experiment": "proofs_proofnet",
+  "source_branch": "jd/rate-llm-answers",
+  "source_commit": "22f5184c743f805a778194072fcd6f5cdca8e238",
+  "model_labels": [
+    "claude-opus-3",
+    "claude-haiku-3.5",
+    "gpt-4o",
+    "gpt-4o-mini"
+  ],
+  "source_model": "claude-haiku-4.5",
+  "n_questions_per_trial": 10,
+  "note": "Real-analysis proofs whose problem statements are taken from the ProofNet benchmark (hoskinson-center/proofnet, Rudin + Pugh real-analysis subset); candidate proofs written by claude-haiku-4.5 (open-ended, no ground truth). Three graders over 500 permutations (codex 500, claude 497, qwen 453 completed). Blessed aggregates with p-values: data/slides_proofnet/decompose_proofnet.json (verified against the migrated summaries). CoT-judge files live on the branch under janekd/rate_llm_math/data/cot_proofs/judged.* (100 write-ups/grader).",
+  "n_seeds_committed": 250,
+  "cap_note": "cache trimmed to the 250 seeds shared by all three graders, the equal-n subset used in the paper"
+}

@@ -1,0 +1,40 @@
+{
+  "experiment": "proofs_gemini",
+  "grader": "qwen",
+  "source_branch": "jd/rate-llm-answers",
+  "source_commit": "22f5184c743f805a778194072fcd6f5cdca8e238",
+  "source_run": "rate_llm_math/data/runs/full_gemini_qwen",
+  "n_trials": 105,
+  "n_transcripts": 105,
+  "n_analysis_seeds": 105,
+  "seed_range": [
+    333445,
+    333593
+  ],
+  "original_run_meta": {
+    "experiment": "proofs_gemini_lab_x_tier_2024",
+    "task": "proofs",
+    "has_ground_truth": false,
+    "model_labels": [
+      "claude-opus-3",
+      "claude-haiku-3.5",
+      "gpt-4o",
+      "gpt-4o-mini"
+    ],
+    "source_models": [
+      "claude-haiku-4.5"
+    ],
+    "source_display_names": [
+      "claude-haiku-4.5"
+    ],
+    "rater_backend": "qwen",
+    "rater_model": "qwen/qwen3.6-max-preview",
+    "rater_reasoning_effort": "high",
+    "no_bash": false,
+    "qwen_compute_enabled": true,
+    "docker_image": "eval-rater-janekd-qwen:latest",
+    "start_seed": 333444,
+    "n_seeds": 150,
+    "questions_file": "/Users/jandubinski/giraffes-jd-worktree/janekd/rate_llm_math/proof_questions_gemini.jsonl"
+  }
+}

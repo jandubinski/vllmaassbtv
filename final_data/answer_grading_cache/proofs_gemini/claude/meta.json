@@ -1,0 +1,41 @@
+{
+  "experiment": "proofs_gemini",
+  "grader": "claude",
+  "source_branch": "jd/rate-llm-answers",
+  "source_commit": "22f5184c743f805a778194072fcd6f5cdca8e238",
+  "source_run": "rate_llm_math/data/runs/full_gemini_claude",
+  "n_trials": 92,
+  "n_transcripts": 0,
+  "n_analysis_seeds": 90,
+  "seed_range": [
+    333444,
+    333537
+  ],
+  "original_run_meta": {
+    "experiment": "proofs_gemini_lab_x_tier_2024",
+    "task": "proofs",
+    "has_ground_truth": false,
+    "model_labels": [
+      "claude-opus-3",
+      "claude-haiku-3.5",
+      "gpt-4o",
+      "gpt-4o-mini"
+    ],
+    "source_models": [
+      "claude-haiku-4.5"
+    ],
+    "source_display_names": [
+      "claude-haiku-4.5"
+    ],
+    "rater_backend": "claude",
+    "rater_model": "claude-opus-4-7",
+    "rater_reasoning_effort": "high",
+    "no_bash": false,
+    "qwen_compute_enabled": true,
+    "docker_image": "eval-rater-janekd:latest",
+    "start_seed": 333444,
+    "n_seeds": 250,
+    "questions_file": "/Users/jandubinski/giraffes-jd-worktree/janekd/rate_llm_math/proof_questions_gemini.jsonl"
+  },
+  "transcript_note": "no transcripts retained upstream: the run was interrupted; only 10 in-flight .tmp_rep_* partial rater_log.jsonl exist on the branch (not migrated). Jan's analysis predates the last 2 trials (90 of 92 seeds)."
+}

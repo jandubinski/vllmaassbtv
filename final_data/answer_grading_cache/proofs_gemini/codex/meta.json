@@ -1,0 +1,41 @@
+{
+  "experiment": "proofs_gemini",
+  "grader": "codex",
+  "source_branch": "jd/rate-llm-answers",
+  "source_commit": "22f5184c743f805a778194072fcd6f5cdca8e238",
+  "source_run": "rate_llm_math/data/runs/full_gemini_codex",
+  "n_trials": 250,
+  "n_transcripts": 0,
+  "n_analysis_seeds": 250,
+  "seed_range": [
+    333444,
+    333693
+  ],
+  "original_run_meta": {
+    "experiment": "proofs_gemini_lab_x_tier_2024",
+    "task": "proofs",
+    "has_ground_truth": false,
+    "model_labels": [
+      "claude-opus-3",
+      "claude-haiku-3.5",
+      "gpt-4o",
+      "gpt-4o-mini"
+    ],
+    "source_models": [
+      "claude-haiku-4.5"
+    ],
+    "source_display_names": [
+      "claude-haiku-4.5"
+    ],
+    "rater_backend": "codex",
+    "rater_model": "gpt-5.4",
+    "rater_reasoning_effort": "high",
+    "no_bash": false,
+    "qwen_compute_enabled": true,
+    "docker_image": "eval-rater-janekd-codex:latest",
+    "start_seed": 333444,
+    "n_seeds": 250,
+    "questions_file": "/Users/jandubinski/giraffes-jd-worktree/janekd/rate_llm_math/proof_questions_gemini.jsonl"
+  },
+  "transcript_note": "no transcripts retained upstream: rate_codex.py wrote rate_codex.stderr only into the container scratch dir, which run.py deletes; the committed rate_codex.stderr files are all 0 bytes."
+}

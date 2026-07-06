@@ -1,0 +1,35 @@
+{
+  "experiment": "alpaca",
+  "grader": "qwen",
+  "source_branch": "jd/rate-llm-answers",
+  "source_commit": "22f5184c743f805a778194072fcd6f5cdca8e238",
+  "source_run": "rate_llm_answers/data/runs/2026-05-24_23-46-17_lab_x_tier_2024",
+  "n_trials": 497,
+  "n_transcripts": 497,
+  "n_analysis_seeds": 497,
+  "seed_range": [
+    222333,
+    222832
+  ],
+  "original_run_meta": {
+    "experiment": "lab_x_tier_2024",
+    "model_labels": [
+      "claude-opus-3",
+      "claude-haiku-3.5",
+      "gpt-4o",
+      "gpt-4o-mini"
+    ],
+    "source_models": [
+      "claude-haiku-4.5"
+    ],
+    "source_display_names": [
+      "claude-haiku-4.5"
+    ],
+    "rater_backend": "qwen",
+    "rater_model": "qwen/qwen3.6-max-preview",
+    "rater_reasoning_effort": "high",
+    "docker_image": "eval-rater-janekd-qwen:latest",
+    "start_seed": 222333,
+    "n_seeds": 500
+  }
+}

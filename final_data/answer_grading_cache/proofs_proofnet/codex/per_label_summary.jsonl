@@ -1,0 +1,5 @@
+{"kind": "per_label_summary", "experiment": "proofs_proofnet", "grader": "codex", "n_rows": 4, "source_branch": "jd/rate-llm-answers", "source_commit": "22f5184c743f805a778194072fcd6f5cdca8e238", "source_path": "rate_llm_math/data/runs/2026-06-22_17-22-04_proofs_analysis_lab_x_tier_2024_codex/analysis/per_label_summary.csv", "note": "recomputed on the 250-seed paper subset"}
+{"model": "claude-opus-3", "n_seeds": 250, "total_wins": 722.0, "total_questions": 2500, "mean_win_rate": 0.2888, "ci_lo": 0.268, "ci_hi": 0.3108}
+{"model": "claude-haiku-3.5", "n_seeds": 250, "total_wins": 474.0, "total_questions": 2500, "mean_win_rate": 0.1896, "ci_lo": 0.174, "ci_hi": 0.2052}
+{"model": "gpt-4o", "n_seeds": 250, "total_wins": 732.0, "total_questions": 2500, "mean_win_rate": 0.2928, "ci_lo": 0.272, "ci_hi": 0.3128}
+{"model": "gpt-4o-mini", "n_seeds": 250, "total_wins": 572.0, "total_questions": 2500, "mean_win_rate": 0.2288, "ci_lo": 0.2108, "ci_hi": 0.2468}

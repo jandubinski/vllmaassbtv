@@ -1,0 +1,5 @@
+{"kind": "per_label_summary", "experiment": "alpaca_fairness", "grader": "codex", "variant": "soft", "n_rows": 4, "source_branch": "jd/rate-llm-answers", "source_commit": "22f5184c743f805a778194072fcd6f5cdca8e238", "source_path": "rate_llm_answers/data/runs/2026-05-26_14-26-44_lab_x_tier_2024_promptvar_soft/analysis/per_label_summary.csv"}
+{"model": "claude-opus-3", "n_seeds": 249, "total_wins": 637.0, "total_questions": 2490, "mean_win_rate": 0.2558, "ci_lo": 0.2392, "ci_hi": 0.2729}
+{"model": "claude-haiku-3.5", "n_seeds": 249, "total_wins": 516.167, "total_questions": 2490, "mean_win_rate": 0.2073, "ci_lo": 0.1913, "ci_hi": 0.2239}
+{"model": "gpt-4o", "n_seeds": 249, "total_wins": 829.0, "total_questions": 2490, "mean_win_rate": 0.3329, "ci_lo": 0.3133, "ci_hi": 0.3528}
+{"model": "gpt-4o-mini", "n_seeds": 249, "total_wins": 507.833, "total_questions": 2490, "mean_win_rate": 0.2039, "ci_lo": 0.1876, "ci_hi": 0.22}
