@@ -116,6 +116,21 @@ function covScope(r) {
   return r.cov_scope === true;
 }
 
+function hasText(s) {
+  return typeof s === "string" && s.trim().length > 0;
+}
+
+// Covertness is only displayed for a source that actually has text; an
+// empty CoT / answer gets no covertness field at all (not "UNKNOWN").
+function covUsable(r) {
+  return covScope(r) && hasText(r.reasoning);
+}
+
+function metaLookup(r, key) {
+  for (const [k, v] of r.meta || []) if (k === key) return v;
+  return null;
+}
+
 async function loadIndex() {
   const res = await fetch("data/index.json", { cache: "no-store" });
   INDEX = await res.json();
@@ -246,7 +261,7 @@ function filteredRows() {
         if (side === "unparsed" && r.estimate !== null) return false;
       }
       if (cov !== "all") {
-        if (!covScope(r)) return false;
+        if (!covUsable(r)) return false;
         const c = r.cot_covertness ?? "unmeasured";
         if (c !== cov) return false;
       }
@@ -266,7 +281,20 @@ function sideInfo(r) {
   return { cls: "na", label: "" };
 }
 
+// Every experiment's card leads with one identifying badge, so the list
+// reads the same everywhere: scenario for the scenario-based experiments,
+// the picked activity / trial seed where there is no scenario.
 function badgeMeta(r) {
+  if (DATA.experiment === "activity_preferences") {
+    const picked = metaLookup(r, "Picked");
+    return (picked && picked !== "(unparsed)")
+      ? { cls: "otherco", label: `picked: ${picked}` }
+      : { cls: "otherco", label: "no parsed pick" };
+  }
+  if (DATA.experiment === "answer_grading") {
+    const seed = metaLookup(r, "Trial seed");
+    return seed ? { cls: "otherco", label: `trial ${seed}` } : null;
+  }
   if (!r.direction) return null;
   if (DATA.experiment === "job_offer") {
     if (r.group === "ours_first") return { cls: "origin", label: `${r.direction} (own = current)` };
@@ -318,7 +346,7 @@ function renderList() {
       const side = sideInfo(r);
       const badge = badgeMeta(r);
       const showEst = !!exp.estimate_label;
-      const cov = !covScope(r) ? "" : (r.cot_covertness
+      const cov = !covUsable(r) ? "" : (r.cot_covertness
         ? `<span class="cov-chip cov-${r.cot_covertness}">${r.cot_covertness}</span>`
         : '<span class="cov-chip cov-none">not measured</span>');
       card.innerHTML = `
@@ -426,9 +454,10 @@ function metaItems(r) {
     if (exp.estimate_label) items.push([exp.estimate_label, fmtNum(r.estimate)]);
   }
   for (const [k, v] of r.meta || []) items.push([k, v]);
-  if (covScope(r)) {
+  if (covUsable(r)) {
     items.push(["CoT covertness", r.cot_covertness || "not measured"]);
-    if (SECTION_HEADINGS[DATA.experiment]?.answer !== null) {
+    const answerShown = SECTION_HEADINGS[DATA.experiment]?.answer !== null;
+    if (answerShown && hasText(r.answer)) {
       items.push(["Answer covertness", r.answer_covertness || "not measured"]);
     }
   }
@@ -460,7 +489,7 @@ function renderDetail() {
   d.append(meta);
 
   const covLabels = COVERTNESS_LABELS[DATA.experiment] || {};
-  if (covScope(r) && r.cot_covertness) {
+  if (covUsable(r) && r.cot_covertness) {
     const note = document.createElement("div");
     note.className = "cov-note";
     const chip = `<span class="cov-chip cov-${r.cot_covertness}">${r.cot_covertness}</span>`;

@@ -117,6 +117,10 @@ main {
   border-radius: 10px;
   font-weight: 600;
   letter-spacing: 0.3px;
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .badge.baseline { background: rgba(167,139,250,0.15); color: var(--baseline); }
