@@ -99,6 +99,7 @@ function sideInfo(r) {
 }
 
 function renderList() {
+  if (!DATA) return;
   const rows = filteredRows();
   const thr = DATA.threshold;
 
