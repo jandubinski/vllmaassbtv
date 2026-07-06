@@ -1,8 +1,10 @@
 {
+ "version": 1783350551,
  "experiments": [
   {
    "id": "giraffes",
    "label": "Donation Bet (threshold estimates)",
+   "prompt_key_label": "Question",
    "prompt_keys": [
     "v1_giraffes_accurate",
     "v1_zills_accurate",
@@ -13,6 +15,41 @@
     "v1_turns_accurate",
     "v1_orangecars_accurate",
     "v1_windowdays_accurate"
+   ],
+   "prompt_key_labels": {
+    "v1_giraffes_accurate": "giraffes",
+    "v1_zills_accurate": "zills",
+    "v1_bridge_accurate": "bridge",
+    "v1_crochet_accurate": "crochet",
+    "v1_tbc_accurate": "tbc",
+    "v1_maiden_accurate": "maiden",
+    "v1_turns_accurate": "turns",
+    "v1_orangecars_accurate": "orangecars",
+    "v1_windowdays_accurate": "windowdays"
+   },
+   "scenario_label": "Scenario",
+   "scenarios": [
+    {
+     "id": "below_good",
+     "label": "below_good (low = good cause)"
+    },
+    {
+     "id": "above_good",
+     "label": "above_good (high = good cause)"
+    },
+    {
+     "id": "baseline",
+     "label": "baseline (no note)"
+    }
+   ],
+   "has_threshold": true,
+   "covertness_categories": [
+    "INFLUENCED",
+    "MENTIONED",
+    "NOT_INFLUENCED",
+    "NO_STATEMENT",
+    "NO_MENTION",
+    "UNKNOWN"
    ],
    "model_groups": [
     {
@@ -215,6 +252,139 @@
          "key": "kimi-k2.6",
          "effort": "default",
          "display": "Kimi-K2.6"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "sample_per_cell": 25
+  },
+  {
+   "id": "ai_bubble",
+   "label": "AI Bubble (investment framing)",
+   "prompt_key_label": "Paraphrase",
+   "prompt_keys": [
+    "v1",
+    "v2a",
+    "v2b"
+   ],
+   "prompt_key_labels": {
+    "v1": "v1",
+    "v2a": "v2a",
+    "v2b": "v2b"
+   },
+   "scenario_label": "Investment in",
+   "scenarios": [
+    {
+     "id": "baseline",
+     "label": "baseline (no investment)"
+    },
+    {
+     "id": "Anthropic",
+     "label": "Anthropic"
+    },
+    {
+     "id": "Meta",
+     "label": "Meta"
+    },
+    {
+     "id": "Google",
+     "label": "Google"
+    },
+    {
+     "id": "DeepSeek",
+     "label": "DeepSeek"
+    },
+    {
+     "id": "OpenAI",
+     "label": "OpenAI"
+    },
+    {
+     "id": "xAI",
+     "label": "xAI"
+    }
+   ],
+   "has_threshold": false,
+   "covertness_categories": [
+    "INFLUENCED",
+    "COMPANY_FACTOR",
+    "MENTIONED",
+    "NOT_INFLUENCED",
+    "NO_MENTION",
+    "UNKNOWN"
+   ],
+   "model_groups": [
+    {
+     "family": "Claude",
+     "bases": [
+      {
+       "base": "claude-opus-4.6",
+       "variants": [
+        {
+         "key": "claude-opus-4.6-max",
+         "effort": "max",
+         "display": "claude-opus-4-6-max"
+        }
+       ]
+      },
+      {
+       "base": "claude-opus-4.7",
+       "variants": [
+        {
+         "key": "claude-opus-4.7-max",
+         "effort": "max",
+         "display": "claude-opus-4-7-max"
+        }
+       ]
+      },
+      {
+       "base": "claude-opus-4.8",
+       "variants": [
+        {
+         "key": "claude-opus-4.8-max",
+         "effort": "max",
+         "display": "claude-opus-4-8-max"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "family": "GPT",
+     "bases": [
+      {
+       "base": "gpt-5.4",
+       "variants": [
+        {
+         "key": "gpt-5.4-xhigh",
+         "effort": "xhigh",
+         "display": "gpt-5.4-xhigh"
+        }
+       ]
+      },
+      {
+       "base": "gpt-5.5",
+       "variants": [
+        {
+         "key": "gpt-5.5-xhigh",
+         "effort": "xhigh",
+         "display": "gpt-5.5-xhigh"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "family": "Gemini",
+     "bases": [
+      {
+       "base": "gemini-3.1-pro",
+       "variants": [
+        {
+         "key": "gemini-3.1-pro-high",
+         "effort": "high",
+         "display": "gemini-3.1-pro-high"
         }
        ]
       }

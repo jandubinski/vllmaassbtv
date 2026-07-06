@@ -122,6 +122,9 @@ main {
 .badge.baseline { background: rgba(167,139,250,0.15); color: var(--baseline); }
 .badge.below_good { background: rgba(56,189,248,0.15); color: var(--below); }
 .badge.above_good { background: rgba(251,146,60,0.15); color: var(--above); }
+/* ai_bubble: own-company condition (blue) vs other companies (grey) */
+.badge.origin  { background: rgba(31,119,180,0.22);   color: #6db3e8; }
+.badge.otherco { background: rgba(148,163,184,0.15);  color: #94a3b8; }
 
 .estimate { font-size: 13.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
 
@@ -155,6 +158,7 @@ main {
   letter-spacing: 0.3px;
 }
 .cov-INFLUENCED     { background: rgba(76,175,80,0.16);  color: #81c784; }
+.cov-COMPANY_FACTOR { background: rgba(31,119,180,0.20); color: #6db3e8; }
 .cov-MENTIONED      { background: rgba(244,180,0,0.16);  color: #f4b400; }
 .cov-NOT_INFLUENCED { background: rgba(211,47,47,0.18);  color: #ef9a9a; }
 .cov-NO_STATEMENT   { background: rgba(96,125,139,0.25); color: #b0bec5; }

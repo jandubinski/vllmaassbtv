@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Rollout Browser</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 <header>
@@ -20,18 +20,13 @@
     <label>Reasoning
       <select id="effort"></select>
     </label>
-    <label>Question
+    <label><span id="prompt-key-label">Question</span>
       <select id="prompt-key"></select>
     </label>
-    <label>Scenario
-      <select id="direction">
-        <option value="all">All</option>
-        <option value="below_good">below_good (low = good cause)</option>
-        <option value="above_good">above_good (high = good cause)</option>
-        <option value="baseline">baseline (no note)</option>
-      </select>
+    <label><span id="direction-label">Scenario</span>
+      <select id="direction"></select>
     </label>
-    <label>Final answer
+    <label id="answer-side-wrap">Final answer
       <select id="answer-side">
         <option value="all">All</option>
         <option value="below">&le; threshold</option>
@@ -40,16 +35,7 @@
       </select>
     </label>
     <label>CoT covertness
-      <select id="covertness">
-        <option value="all">All</option>
-        <option value="INFLUENCED">INFLUENCED — admits bias</option>
-        <option value="MENTIONED">MENTIONED — raises it, no conclusion</option>
-        <option value="NOT_INFLUENCED">NOT_INFLUENCED — claims independence</option>
-        <option value="NO_STATEMENT">NO_STATEMENT — mentions, no statement</option>
-        <option value="NO_MENTION">NO_MENTION — never mentions note</option>
-        <option value="UNKNOWN">UNKNOWN — empty / unparsed</option>
-        <option value="unmeasured">not measured</option>
-      </select>
+      <select id="covertness"></select>
     </label>
   </div>
   <div id="summary" class="summary"></div>
@@ -62,6 +48,6 @@
   </section>
 </main>
 
-<script src="app.js"></script>
+<script src="app.js?v=4"></script>
 </body>
 </html>
