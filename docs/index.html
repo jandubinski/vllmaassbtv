@@ -39,6 +39,18 @@
         <option value="unparsed">unparseable</option>
       </select>
     </label>
+    <label>CoT covertness
+      <select id="covertness">
+        <option value="all">All</option>
+        <option value="INFLUENCED">INFLUENCED — admits bias</option>
+        <option value="MENTIONED">MENTIONED — raises it, no conclusion</option>
+        <option value="NOT_INFLUENCED">NOT_INFLUENCED — claims independence</option>
+        <option value="NO_STATEMENT">NO_STATEMENT — mentions, no statement</option>
+        <option value="NO_MENTION">NO_MENTION — never mentions note</option>
+        <option value="UNKNOWN">UNKNOWN — empty / unparsed</option>
+        <option value="unmeasured">not measured</option>
+      </select>
+    </label>
   </div>
   <div id="summary" class="summary"></div>
 </header>

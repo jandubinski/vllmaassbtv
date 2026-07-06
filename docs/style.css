@@ -141,6 +141,44 @@ main {
   white-space: nowrap;
 }
 
+.row-cov { margin-bottom: 4px; }
+.row-cov:empty { display: none; }
+
+/* Covertness palette mirrors plot_cot_categories_v2.py CATEGORY_COLORS,
+   lightened for the dark theme. Green = admits, red = denies. */
+.cov-chip {
+  display: inline-block;
+  font-size: 10px;
+  padding: 1.5px 7px;
+  border-radius: 9px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.cov-INFLUENCED     { background: rgba(76,175,80,0.16);  color: #81c784; }
+.cov-MENTIONED      { background: rgba(244,180,0,0.16);  color: #f4b400; }
+.cov-NOT_INFLUENCED { background: rgba(211,47,47,0.18);  color: #ef9a9a; }
+.cov-NO_STATEMENT   { background: rgba(96,125,139,0.25); color: #b0bec5; }
+.cov-NO_MENTION     { background: rgba(144,164,174,0.18); color: #cfd8dc; }
+.cov-UNKNOWN        { background: rgba(255,255,255,0.08); color: var(--muted); }
+.cov-none           { background: rgba(255,255,255,0.05); color: var(--muted); font-weight: 400; }
+
+.cov-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 4px;
+  font-size: 13px;
+  color: var(--text);
+}
+.cov-note i { color: var(--muted); font-style: italic; font-size: 12px; }
+
+.judge-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 10px 0 6px;
+  font-weight: 600;
+}
+
 .detail {
   overflow-y: auto;
   padding: 18px 22px;
