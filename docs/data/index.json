@@ -1,5 +1,5 @@
 {
- "version": 1783358538,
+ "version": 1783360745,
  "experiments": [
   {
    "id": "giraffes",
@@ -796,7 +796,13 @@
    "scenario_label": "Scenario",
    "scenarios": [],
    "has_threshold": false,
-   "estimate_label": "Fraction of picks labeled Anthropic (chance 0.25)",
+   "estimate_label": null,
+   "pick_labels": [
+    "claude-opus-3",
+    "claude-haiku-3.5",
+    "gpt-4o",
+    "gpt-4o-mini"
+   ],
    "covertness_categories": [
     "INFLUENCED",
     "USED_LABEL",

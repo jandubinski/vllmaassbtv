@@ -87,6 +87,49 @@ const SECTION_HEADINGS = {
 // judged the grader's visible working commentary (rater_text).
 const COV_FIELD_LABEL = { answer_grading: "Transcript covertness" };
 
+// answer_grading candidate labels (same colors as plot_win_rates.py). All
+// four candidates are same-author; any per-label skew from 25% is label bias.
+const PICK_COLORS = {
+  "claude-opus-3": "#C0392B",
+  "claude-haiku-3.5": "#E67E22",
+  "gpt-4o": "#2471A3",
+  "gpt-4o-mini": "#85C1E9",
+};
+
+function pickLabels() {
+  return currentExperiment().pick_labels || Object.keys(PICK_COLORS);
+}
+
+// Stacked per-label bar for one count distribution.
+function pickBar(counts, height) {
+  const total = pickLabels().reduce((s, lb) => s + (counts[lb] || 0), 0);
+  const bar = document.createElement("div");
+  bar.className = "pick-bar";
+  bar.style.height = `${height}px`;
+  if (!total) { bar.classList.add("empty"); return bar; }
+  for (const lb of pickLabels()) {
+    const n = counts[lb] || 0;
+    if (!n) continue;
+    const seg = document.createElement("span");
+    seg.className = "pick-seg";
+    seg.style.width = `${(100 * n) / total}%`;
+    seg.style.background = PICK_COLORS[lb] || "#666";
+    seg.title = `${lb}: ${n}/${total}`;
+    bar.append(seg);
+  }
+  return bar;
+}
+
+function sumPickCounts(rows) {
+  const totals = {};
+  for (const r of rows) {
+    for (const [lb, n] of Object.entries(r.label_counts || {})) {
+      totals[lb] = (totals[lb] || 0) + n;
+    }
+  }
+  return totals;
+}
+
 function covFieldLabel() {
   const id = DATA ? DATA.experiment : els.experiment.value;
   return COV_FIELD_LABEL[id] || "CoT covertness";
@@ -344,7 +387,18 @@ function renderList() {
       `<b>${rows.length}</b> rollouts shown · threshold <b>${fmtNum(thr)}</b>${pct}`;
   } else {
     let txt = `<b>${rows.length}</b> rollouts shown`;
-    if (exp.estimate_label) {
+    if (DATA.experiment === "answer_grading") {
+      const totals = sumPickCounts(rows);
+      const total = Object.values(totals).reduce((s, n) => s + n, 0);
+      if (total) {
+        const parts = pickLabels().map((lb) => {
+          const pct = ((100 * (totals[lb] || 0)) / total).toFixed(0);
+          const sw = `<span class="pick-swatch" style="background:${PICK_COLORS[lb] || "#666"}"></span>`;
+          return `${sw}${lb} <b>${pct}%</b>`;
+        });
+        txt += ` · win rates: ${parts.join(" · ")} <span class="dim">(chance 25% each, same author)</span>`;
+      }
+    } else if (exp.estimate_label) {
       const parsed = rows.filter((r) => r.estimate !== null && r.estimate !== undefined);
       if (parsed.length) {
         const mean = parsed.reduce((s, r) => s + r.estimate, 0) / parsed.length;
@@ -377,6 +431,9 @@ function renderList() {
           <span class="side ${side.cls}">${showEst ? side.label : ""}</span>
         </div>
         <div class="row-cov">${cov}</div>`;
+      if (r.label_counts) {
+        card.append(pickBar(r.label_counts, 6));
+      }
       card.addEventListener("click", () => {
         selectedIdx = r._idx;
         renderList();
@@ -598,6 +655,27 @@ function renderDetail() {
     d.append(wrap);
   }
 
+  // answer_grading: full pick distribution over the four (same-author) labels.
+  if (r.label_counts) {
+    const h = document.createElement("h2");
+    h.textContent = "Picks by label (all four answers by the same author; chance 25% each)";
+    d.append(h);
+    const total = Object.values(r.label_counts).reduce((s, n) => s + n, 0);
+    d.append(pickBar(r.label_counts, 12));
+    const legend = document.createElement("div");
+    legend.className = "pick-legend";
+    for (const lb of pickLabels()) {
+      const item = document.createElement("span");
+      item.className = "pick-legend-item";
+      const sw = document.createElement("span");
+      sw.className = "pick-swatch";
+      sw.style.background = PICK_COLORS[lb] || "#666";
+      item.append(sw, document.createTextNode(`${lb} ${r.label_counts[lb] || 0}/${total}`));
+      legend.append(item);
+    }
+    d.append(legend);
+  }
+
   // answer_grading: which label the grader picked per question.
   if (r.picks && r.picks.length) {
     const h = document.createElement("h2");
@@ -607,8 +685,11 @@ function renderDetail() {
     wrap.className = "picks-block";
     for (const p of r.picks) {
       const chip = document.createElement("span");
-      chip.className = "pick-chip" + (String(p.label).startsWith("claude") ? " anthropic" : "");
-      chip.textContent = `Q${p.q}: ${p.label}`;
+      chip.className = "pick-chip";
+      const sw = document.createElement("span");
+      sw.className = "pick-swatch";
+      sw.style.background = PICK_COLORS[p.label] || "#666";
+      chip.append(sw, document.createTextNode(`Q${p.q}: ${p.label}`));
       wrap.append(chip);
     }
     d.append(wrap);
