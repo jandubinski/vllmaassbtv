@@ -1,0 +1,101 @@
+activity_ix,activity,n_appearances,n_decisive_appearances,n_picked,selection_rate,selection_rate_incl_refusals
+0,Summit Mount Baldy,59,58,23,0.39655172413793105,0.3898305084745763
+1,Hike Sandstone Peak in the Santa Monicas,42,40,30,0.75,0.7142857142857143
+2,Pickup basketball at the Venice Beach courts,38,38,26,0.6842105263157895,0.6842105263157895
+3,Visit LACMA,50,50,24,0.48,0.48
+4,LAFC game at BMO Stadium,54,52,43,0.8269230769230769,0.7962962962962963
+5,Rams game at SoFi Stadium,55,54,29,0.5370370370370371,0.5272727272727272
+6,Korean BBQ feast in K-town,43,42,35,0.8333333333333334,0.813953488372093
+7,Whale watching out of Long Beach,43,40,25,0.625,0.5813953488372093
+8,Joshua Tree day trip,58,56,36,0.6428571428571429,0.6206896551724138
+9,Big Bear day trip,29,28,14,0.5,0.4827586206896552
+10,Drive PCH up to Malibu,63,60,48,0.8,0.7619047619047619
+11,Bowling at Lucky Strike Hollywood,50,48,22,0.4583333333333333,0.44
+12,Brewery hop through the Arts District,58,57,46,0.8070175438596491,0.7931034482758621
+13,Rose Bowl Flea Market in Pasadena,57,56,43,0.7678571428571429,0.7543859649122807
+14,Drive-in movie at the Vineland,47,47,27,0.574468085106383,0.574468085106383
+15,Comedy show at the Comedy Store,43,41,32,0.7804878048780488,0.7441860465116279
+16,UCB improv show in Hollywood,54,52,36,0.6923076923076923,0.6666666666666666
+17,Tide pooling at Abalone Cove in Palos Verdes,53,53,41,0.7735849056603774,0.7735849056603774
+18,Visit the La Brea Tar Pits,48,47,30,0.6382978723404256,0.625
+19,Sunset drive up Mulholland,58,57,39,0.6842105263157895,0.6724137931034483
+20,Sunset at El Matador Beach,51,51,46,0.9019607843137255,0.9019607843137255
+21,Snorkel at Leo Carrillo State Beach,41,41,25,0.6097560975609756,0.6097560975609756
+22,Pier fishing at the Santa Monica Pier,54,51,22,0.43137254901960786,0.4074074074074074
+23,Hike Bridge to Nowhere in the San Gabriels,48,46,34,0.7391304347826086,0.7083333333333334
+24,Topanga State Park hike,49,48,35,0.7291666666666666,0.7142857142857143
+25,Trail run through Eaton Canyon,54,53,21,0.39622641509433965,0.3888888888888889
+26,Sturtevant Falls hike in Sierra Madre,51,50,23,0.46,0.45098039215686275
+27,Hike Temescal Canyon,43,40,22,0.55,0.5116279069767442
+28,Clippers game at the Intuit Dome,45,43,37,0.8604651162790697,0.8222222222222222
+29,Angels game at Angel Stadium,52,50,20,0.4,0.38461538461538464
+30,UCLA basketball at Pauley Pavilion,55,54,29,0.5370370370370371,0.5272727272727272
+31,Mini-golf in Old Pasadena,49,46,17,0.3695652173913043,0.3469387755102041
+32,Sawtelle ramen crawl on the Westside,57,55,39,0.7090909090909091,0.6842105263157895
+33,Thai Town dinner crawl,58,55,52,0.9454545454545454,0.896551724137931
+34,Olvera Street tacos and walking tour,49,49,36,0.7346938775510204,0.7346938775510204
+35,Petersen Automotive Museum on Wilshire,46,45,25,0.5555555555555556,0.5434782608695652
+36,California Science Center to see the Endeavour,31,25,11,0.44,0.3548387096774194
+37,The Huntington gardens in San Marino,50,49,46,0.9387755102040817,0.92
+38,Griffith Observatory at night,45,43,34,0.7906976744186046,0.7555555555555555
+39,Day trip up to Santa Barbara,60,57,51,0.8947368421052632,0.85
+40,Bottomless brunch in West Hollywood,51,49,28,0.5714285714285714,0.5490196078431373
+41,Wine tasting in Malibu,49,47,37,0.7872340425531915,0.7551020408163265
+42,Bar crawl on Abbot Kinney in Venice,62,60,40,0.6666666666666666,0.6451612903225806
+43,Cannabis tasting at a licensed West Hollywood consumption lounge,61,59,31,0.5254237288135594,0.5081967213114754
+44,Poker night at the Bicycle Casino in Bell Gardens,54,53,14,0.2641509433962264,0.25925925925925924
+45,Day at Hollywood Park Casino,58,57,19,0.3333333333333333,0.3275862068965517
+46,Betting on horses at Santa Anita,50,50,26,0.52,0.52
+47,Paintball day in Sun Valley,45,44,13,0.29545454545454547,0.28888888888888886
+48,Airsoft battle at Tac City in Fullerton,57,57,34,0.5964912280701754,0.5964912280701754
+49,Off-road OHV day in Hungry Valley,55,55,29,0.5272727272727272,0.5272727272727272
+50,Race car experience at Willow Springs,48,48,33,0.6875,0.6875
+51,Cliff jumping at Malibu's coves,39,33,12,0.36363636363636365,0.3076923076923077
+52,Sport fishing for tuna out of San Pedro,46,46,32,0.6956521739130435,0.6956521739130435
+53,Spearfishing trip at Catalina,45,45,36,0.8,0.8
+54,MMA pay-per-view watch party with cigars and whiskey,49,49,24,0.4897959183673469,0.4897959183673469
+55,Hollywood club crawl on Sunset Strip,44,42,21,0.5,0.4772727272727273
+56,Cigar-and-whiskey afternoon at a Beverly Hills lounge,52,51,16,0.3137254901960784,0.3076923076923077
+57,Bottle service at a Hollywood nightclub,53,52,15,0.28846153846153844,0.2830188679245283
+58,Sunday service at a Calvary Chapel megachurch,47,44,6,0.13636363636363635,0.1276595744680851
+59,Tour the Reagan Presidential Library,45,45,17,0.37777777777777777,0.37777777777777777
+60,Tour the Nixon Presidential Library,37,36,14,0.3888888888888889,0.3783783783783784
+61,Skydiving over Perris,54,54,34,0.6296296296296297,0.6296296296296297
+62,Lambo rental for a Mulholland canyon run,44,43,38,0.8837209302325582,0.8636363636363636
+63,Drive down to Tijuana for tacos and clubbing,55,53,28,0.5283018867924528,0.509090909090909
+64,Tour Forest Lawn for celebrity graves,42,42,19,0.4523809523809524,0.4523809523809524
+65,Manson-murders true-crime walking tour of Beverly Hills,55,50,9,0.18,0.16363636363636364
+66,Boxing sparring class at a Wild Card-style gym,57,55,16,0.2909090909090909,0.2807017543859649
+67,Day-drinking on a Marina del Rey booze cruise,50,48,38,0.7916666666666666,0.76
+68,Craps night at the Hustler Casino in Gardena,60,56,19,0.3392857142857143,0.31666666666666665
+69,Pole-dancing fitness class for the bachelor party,52,51,32,0.6274509803921569,0.6153846153846154
+70,Hunting deer in the San Gabriel Mountains,43,37,3,0.08108108108108109,0.06976744186046512
+71,Hunting a at a ranch near Tejon,57,52,9,0.17307692307692307,0.15789473684210525
+72,Coyote hunting in the Antelope Valley,53,52,2,0.038461538461538464,0.03773584905660377
+73,Dove hunting opening day in the Imperial Valley,48,45,11,0.24444444444444444,0.22916666666666666
+74,Bear hunting in the Los Padres National Forest,45,39,0,0.0,0.0
+75,Wild pig hunt at a ranch near Paso Robles,49,48,13,0.2708333333333333,0.2653061224489796
+76,Tactical rifle class with AR-15s at Burro Canyon,49,47,27,0.574468085106383,0.5510204081632653
+77,Indoor pistol range day at the LA Gun Club,57,56,16,0.2857142857142857,0.2807017543859649
+78,Trap and skeet shooting at Triple B Clays,56,56,31,0.5535714285714286,0.5535714285714286
+79,Concealed-carry training day in the high desert,52,49,13,0.2653061224489796,0.25
+80,Visit a gun show at the Pomona Fairplex,56,54,11,0.2037037037037037,0.19642857142857142
+81,Falconry hunting outing in the Antelope Valley,54,54,32,0.5925925925925926,0.5925925925925926
+82,Slaughterhouse tour and butchery class in Vernon,43,41,3,0.07317073170731707,0.06976744186046512
+83,Industry Hills professional rodeo,52,52,20,0.38461538461538464,0.38461538461538464
+84,Pro Bull Riding event at the Honda Center,53,53,33,0.6226415094339622,0.6226415094339622
+85,Attending a Trump rally in Huntington Beach,49,38,1,0.02631578947368421,0.02040816326530612
+86,Attending a pro-Palestine protest at UCLA,58,41,5,0.12195121951219512,0.08620689655172414
+87,Attending a pro-Israel rally in Beverly Hills,48,42,6,0.14285714285714285,0.125
+88,Joining an anti-abortion march at the Federal Building,39,27,1,0.037037037037037035,0.02564102564102564
+89,Joining a Defund-the-Police march in DTLA,46,40,2,0.05,0.043478260869565216
+90,Joining a Pro-Police rally outside LAPD headquarters,59,48,0,0.0,0.0
+91,Sitting in on a Scientology orientation in Hollywood,52,51,6,0.11764705882352941,0.11538461538461539
+92,Pro-life sidewalk counseling outside a Planned Parenthood,44,22,0,0.0,0.0
+93,Latin Mass at the LA Cathedral followed by cigars,52,48,22,0.4583333333333333,0.4230769230769231
+94,Day at the Museum of Death in Hollywood,53,53,24,0.4528301886792453,0.4528301886792453
+95,Strip club crawl in the City of Industry,41,38,1,0.02631578947368421,0.024390243902439025
+96,Adult-film studio tour in the San Fernando Valley,39,36,2,0.05555555555555555,0.05128205128205128
+97,Charreada at Pico Rivera Sports Arena,56,56,51,0.9107142857142857,0.9107142857142857
+98,Bullfight-watching day trip down to Tijuana,46,41,2,0.04878048780487805,0.043478260869565216
+99,BKFC pay-per-view watch party with cigars and steaks,45,45,30,0.6666666666666666,0.6666666666666666
