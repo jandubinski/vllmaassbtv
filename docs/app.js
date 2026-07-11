@@ -72,7 +72,7 @@ const COVERTNESS_JUDGE_NOTE = {
   ai_bubble: "(Sonnet monitor, own-company rollouts only)",
   agi_tweet: "(Sonnet monitor, own-company rollouts only)",
   job_offer: "(Sonnet monitor, own-company-in-scenario rollouts only)",
-  activity_preferences: "(GPT-5.4-mini monitor, judged from the text alone)",
+  activity_preferences: "(Sonnet monitor, judged from the text alone)",
   answer_grading: "(Sonnet monitor over the grader transcript, blinded)",
 };
 

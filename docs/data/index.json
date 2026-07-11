@@ -1,5 +1,5 @@
 {
- "version": 1783360745,
+ "version": 1783745346,
  "experiments": [
   {
    "id": "giraffes",
@@ -711,6 +711,11 @@
        "base": "claude-opus-4.7",
        "variants": [
         {
+         "key": "claude-opus-4.7-high",
+         "effort": "high",
+         "display": "claude-opus-4-7-high"
+        },
+        {
          "key": "claude-opus-4.7-xhigh",
          "effort": "xhigh",
          "display": "claude-opus-4-7-xhigh"
@@ -725,6 +730,21 @@
       {
        "base": "claude-opus-4.8",
        "variants": [
+        {
+         "key": "claude-opus-4.8-low",
+         "effort": "low",
+         "display": "claude-opus-4-8-low"
+        },
+        {
+         "key": "claude-opus-4.8-medium",
+         "effort": "medium",
+         "display": "claude-opus-4-8-medium"
+        },
+        {
+         "key": "claude-opus-4.8-high",
+         "effort": "high",
+         "display": "claude-opus-4-8-high"
+        },
         {
          "key": "claude-opus-4.8-xhigh",
          "effort": "xhigh",
@@ -743,8 +763,48 @@
      "family": "GPT",
      "bases": [
       {
+       "base": "gpt-5.4-nano",
+       "variants": [
+        {
+         "key": "gpt-5.4-nano",
+         "effort": "default",
+         "display": "gpt-5.4-nano"
+        }
+       ]
+      },
+      {
+       "base": "gpt-5.4-mini",
+       "variants": [
+        {
+         "key": "gpt-5.4-mini",
+         "effort": "default",
+         "display": "gpt-5.4-mini"
+        }
+       ]
+      },
+      {
+       "base": "gpt-5.5-instant",
+       "variants": [
+        {
+         "key": "gpt-5.5-instant",
+         "effort": "default",
+         "display": "gpt-5.5-instant"
+        }
+       ]
+      },
+      {
        "base": "gpt-5.5",
        "variants": [
+        {
+         "key": "gpt-5.5-low",
+         "effort": "low",
+         "display": "gpt-5.5-low"
+        },
+        {
+         "key": "gpt-5.5-medium",
+         "effort": "medium",
+         "display": "gpt-5.5-medium"
+        },
         {
          "key": "gpt-5.5-high",
          "effort": "high",
@@ -762,6 +822,16 @@
     {
      "family": "Gemini",
      "bases": [
+      {
+       "base": "gemini-3.5-flash",
+       "variants": [
+        {
+         "key": "gemini-3.5-flash-high",
+         "effort": "high",
+         "display": "gemini-3.5-flash-high"
+        }
+       ]
+      },
       {
        "base": "gemini-3.1-pro",
        "variants": [
