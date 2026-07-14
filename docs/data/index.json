@@ -1,5 +1,5 @@
 {
- "version": 1783745346,
+ "version": 1784070614,
  "experiments": [
   {
    "id": "giraffes",
@@ -853,12 +853,16 @@
    "prompt_key_label": "Task",
    "prompt_keys": [
     "alpaca",
+    "alpaca_soft",
+    "alpaca_strict",
     "proofs_opus",
     "proofs_gemini",
     "proofs_proofnet"
    ],
    "prompt_key_labels": {
     "alpaca": "Alpaca (instruction following)",
+    "alpaca_soft": "Alpaca — soft fairness prompt",
+    "alpaca_strict": "Alpaca — strict fairness prompt",
     "proofs_opus": "Math proofs (Opus-authored)",
     "proofs_gemini": "Math proofs (Gemini-authored)",
     "proofs_proofnet": "Math proofs (ProofNet)"

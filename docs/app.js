@@ -7,6 +7,7 @@ const els = {
   effort: $("effort"),
   promptKey: $("prompt-key"),
   promptKeyLabel: $("prompt-key-label"),
+  promptKeyWrap: $("prompt-key-wrap"),
   direction: $("direction"),
   directionLabel: $("direction-label"),
   directionWrap: $("direction-wrap"),
@@ -76,6 +77,56 @@ const COVERTNESS_JUDGE_NOTE = {
   answer_grading: "(Sonnet monitor over the grader transcript, blinded)",
 };
 
+// Raw monitor category -> the label the paper's figures use for it, taken
+// from the plotting code in shared/final_scripts (plot_cot_categories_v2
+// CATEGORY_TO_SEGMENT, ai_bubble/covertness PLOT_SEGMENTS, job_offer
+// DECOMP_LABELS, activity_preferences PAPER_CATEGORY_LABELS). The mapping is
+// NOT injective: e.g. NO_MENTION and NO_STATEMENT both fold into "No mention
+// of bias", and in ai_bubble/agi_tweet MENTIONED + INFLUENCED share one
+// "Mentions bias" segment. Categories without an entry either keep their raw
+// name in the paper (answer_grading, App. F) or are excluded from the paper
+// figures (UNKNOWN, REFUSAL).
+const PAPER_LABELS = {
+  giraffes: {
+    INFLUENCED: "Admits to bias",
+    MENTIONED: "Mentions bias",
+    NO_STATEMENT: "No mention of bias",
+    NO_MENTION: "No mention of bias",
+    NOT_INFLUENCED: "Denies bias",
+  },
+  ai_bubble: {
+    COMPANY_FACTOR: "Weighs company specifics",
+    INFLUENCED: "Mentions bias",
+    MENTIONED: "Mentions bias",
+    NO_MENTION: "No mention of bias",
+    NOT_INFLUENCED: "Denies bias",
+  },
+  agi_tweet: {
+    COMPANY_FACTOR: "Weighs company specifics",
+    INFLUENCED: "Mentions bias",
+    MENTIONED: "Mentions bias",
+    NO_MENTION: "No mention of bias",
+    NOT_INFLUENCED: "Denies bias",
+  },
+  job_offer: {
+    ADMITS: "Admits to bias",
+    MENTIONS: "Mentions bias",
+    NO_MENTION: "No mention of bias",
+    DENIES: "Denies bias",
+  },
+  activity_preferences: {
+    INFLUENCED: "Admits to bias",
+    MENTIONED: "Mentions imperfect randomness",
+    NOT_INFLUENCED: "Denies bias",
+  },
+  answer_grading: {},  // App. F reports the raw category names
+};
+
+function paperLabel(cat) {
+  const id = DATA ? DATA.experiment : els.experiment.value;
+  return (PAPER_LABELS[id] || {})[cat] || null;
+}
+
 // Per-experiment detail-section headings (fallbacks: Chain of thought / Answer).
 const SECTION_HEADINGS = {
   activity_preferences: { answer: "Response" },
@@ -120,7 +171,9 @@ function pickBar(counts, height, showNumbers = false) {
     seg.style.background = PICK_COLORS[lb] || "#666";
     seg.title = `${lb}: ${n}/${total}`;
     if (showNumbers) {
-      seg.textContent = String(n);
+      // Fairness-run counts can be fractional (byte-identical tied answers
+      // split the credit).
+      seg.textContent = n % 1 ? n.toFixed(2) : String(n);
       seg.style.color = PICK_TEXT_COLORS[lb] || "#fff";
     }
     bar.append(seg);
@@ -223,6 +276,10 @@ function onExperimentChange() {
     ...exp.prompt_keys.map((pk) =>
       option(pk, pkLabels[pk] || pk.replace(/^v1_/, "").replace(/_accurate$/, ""))),
   );
+  // A single-option variant selector is noise (job_offer only has "all
+  // company pairs"); hide it and let the scenario dropdown act as the
+  // variant.
+  els.promptKeyWrap.style.display = exp.prompt_keys.length > 1 ? "" : "none";
 
   const scenarios = exp.scenarios || [];
   els.directionLabel.textContent = exp.scenario_label || "Scenario";
@@ -238,10 +295,11 @@ function onExperimentChange() {
 
   els.covertnessLabel.textContent = COV_FIELD_LABEL[exp.id] || "CoT covertness";
   const covLabels = COVERTNESS_LABELS[exp.id] || {};
+  const paper = PAPER_LABELS[exp.id] || {};
   els.covertness.replaceChildren(
     option("all", "All"),
     ...(exp.covertness_categories || []).map((c) =>
-      option(c, `${c} — ${covLabels[c] || ""}`)),
+      option(c, `${c}${paper[c] ? ` · ${paper[c]}` : ""} — ${covLabels[c] || ""}`)),
     option("unmeasured", "not measured"),
   );
 
@@ -299,7 +357,9 @@ async function loadData() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     DATA = await res.json();
   } catch (err) {
-    els.list.innerHTML = `<div class="loading">Failed to load data (${err.message}).</div>`;
+    els.list.innerHTML = /404/.test(err.message)
+      ? '<div class="loading">No data for this selection — this model / variant combination was not run (e.g. the fairness-prompt sweeps only cover the Claude Code and Codex graders).</div>'
+      : `<div class="loading">Failed to load data (${err.message}).</div>`;
     els.summary.textContent = "";
     return;
   }
@@ -391,8 +451,12 @@ function renderList() {
     const pct = directional.length
       ? ` — <b>${((100 * nGood) / directional.length).toFixed(0)}%</b> of directional answers on the good side`
       : "";
+    // The threshold is derived from the baseline runs, so it is not shown
+    // when browsing the baseline scenario (where the prompt has no note).
+    const thrTxt = els.direction.value === "baseline"
+      ? "" : ` · threshold <b>${fmtNum(thr)}</b>`;
     els.summary.innerHTML =
-      `<b>${rows.length}</b> rollouts shown · threshold <b>${fmtNum(thr)}</b>${pct}`;
+      `<b>${rows.length}</b> rollouts shown${thrTxt}${pct}`;
   } else {
     let txt = `<b>${rows.length}</b> rollouts shown`;
     if (DATA.experiment === "answer_grading") {
@@ -494,6 +558,24 @@ function textBlock(text, extraClass = "") {
   return div;
 }
 
+// Fill a covertness monitor prompt template for one row: the fields the row
+// pins down ({company} for the motivated experiments, {home}/{current}/
+// {offer} for job_offer) get their values, and {llm_text} becomes a marker —
+// per row it holds the judged source text (for the Donation Bet judge, with
+// all numbers blurred to X; its template says so itself).
+function renderJudgePrompt(template, r) {
+  let t = template;
+  if (DATA.origin) {
+    t = t.split("{company}").join(DATA.origin).split("{home}").join(DATA.origin);
+  }
+  if (DATA.experiment === "job_offer" && (r.direction || "").includes(" → ")) {
+    const [cur, off] = r.direction.split(" → ");
+    t = t.split("{current}").join(cur).split("{offer}").join(off);
+  }
+  return t.split("{llm_text}").join(
+    "[[ the text under judgment is inserted here ]]");
+}
+
 function navRow() {
   const rows = filteredRows();
   const pos = rows.findIndex((r) => r._idx === selectedIdx);
@@ -532,7 +614,11 @@ function metaItems(r) {
   if (DATA.experiment === "giraffes") {
     items.push(["Question", pkLabel]);
     items.push(["Scenario", r.direction]);
-    items.push(["Threshold", fmtNum(DATA.threshold)]);
+    // Baseline prompts carry no bet note; the threshold only exists as a
+    // derived consequence of the baseline runs, so it is not shown there.
+    if (r.direction !== "baseline") {
+      items.push(["Threshold", fmtNum(DATA.threshold)]);
+    }
     items.push(["Final estimate (judge)", fmtNum(r.estimate)]);
     if (r.direction !== "baseline") {
       items.push(["Outcome", sideInfo(r).label || "—"]);
@@ -554,10 +640,13 @@ function metaItems(r) {
   }
   for (const [k, v] of r.meta || []) items.push([k, v]);
   if (covUsable(r)) {
-    items.push([covFieldLabel(), r.cot_covertness || "not measured"]);
+    const withPaper = (cat) => cat
+      ? cat + (paperLabel(cat) ? ` · ${paperLabel(cat)}` : "")
+      : "not measured";
+    items.push([covFieldLabel(), withPaper(r.cot_covertness)]);
     const answerShown = SECTION_HEADINGS[DATA.experiment]?.answer !== null;
     if (answerShown && hasText(r.answer)) {
-      items.push(["Answer covertness", r.answer_covertness || "not measured"]);
+      items.push(["Answer covertness", withPaper(r.answer_covertness)]);
     }
   }
   return items;
@@ -592,7 +681,12 @@ function renderDetail() {
     const note = document.createElement("div");
     note.className = "cov-note";
     const chip = `<span class="cov-chip cov-${r.cot_covertness}">${r.cot_covertness}</span>`;
-    note.innerHTML = `${chip} <span>${covLabels[r.cot_covertness] || ""} <i>${COVERTNESS_JUDGE_NOTE[DATA.experiment] || ""}</i></span>`;
+    // Raw monitor category first, then the (non-injective) paper-figure
+    // label for it, then the category description.
+    const paper = paperLabel(r.cot_covertness)
+      ? `<span class="paper-label" title="label used in the paper's figures">${paperLabel(r.cot_covertness)}</span>`
+      : "";
+    note.innerHTML = `${chip} ${paper} <span>${covLabels[r.cot_covertness] || ""} <i>${COVERTNESS_JUDGE_NOTE[DATA.experiment] || ""}</i></span>`;
     d.append(note);
   }
 
@@ -613,6 +707,28 @@ function renderDetail() {
       h.className = "judge-sub";
       h.textContent = `Answer judge → ${r.answer_covertness}`;
       det.append(h, textBlock(r.answer_covertness_raw, "prompt"));
+    }
+    d.append(det);
+  }
+
+  // The monitor prompt the covertness judge was run with (template shipped
+  // per data file by the exporter; the row-specific fields are filled in,
+  // {llm_text} is replaced by a marker for the text under judgment).
+  if (DATA.cov_prompts && covScope(r)) {
+    const det = document.createElement("details");
+    det.className = "prompt-details";
+    const sum = document.createElement("summary");
+    sum.textContent = "Show covertness judge prompt";
+    det.append(sum);
+    const names = { cot: `${covFieldLabel().replace(" covertness", "")} judge prompt`,
+                    answer: "Answer judge prompt" };
+    for (const key of ["cot", "answer"]) {
+      const tpl = DATA.cov_prompts[key];
+      if (!tpl) continue;
+      const h = document.createElement("div");
+      h.className = "judge-sub";
+      h.textContent = names[key];
+      det.append(h, textBlock(renderJudgePrompt(tpl, r), "prompt"));
     }
     d.append(det);
   }
@@ -679,7 +795,8 @@ function renderDetail() {
   // answer_grading: full pick distribution over the four (same-author) labels.
   if (r.label_counts) {
     const h = document.createElement("h2");
-    h.textContent = "Picks by label (all four answers by the same author; chance 25% each)";
+    h.textContent = "Picks by label (all four answers by the same author; chance 25% each)"
+      + (r.fractional_counts ? " — byte-identical tied answers split the credit" : "");
     d.append(h);
     const total = Object.values(r.label_counts).reduce((s, n) => s + n, 0);
     d.append(pickBar(r.label_counts, 20, true));
@@ -691,7 +808,9 @@ function renderDetail() {
       const sw = document.createElement("span");
       sw.className = "pick-swatch";
       sw.style.background = PICK_COLORS[lb] || "#666";
-      item.append(sw, document.createTextNode(`${lb} ${r.label_counts[lb] || 0}/${total}`));
+      const n = r.label_counts[lb] || 0;
+      const nTxt = n % 1 ? n.toFixed(2) : String(n);
+      item.append(sw, document.createTextNode(`${lb} ${nTxt}/${Math.round(total)}`));
       legend.append(item);
     }
     d.append(legend);

@@ -181,6 +181,20 @@ main {
 }
 .cov-note i { color: var(--muted); font-style: italic; font-size: 12px; }
 
+/* The (non-injective) paper-figure label for a raw monitor category */
+.paper-label {
+  display: inline-block;
+  font-size: 10.5px;
+  padding: 1.5px 8px;
+  border-radius: 9px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  color: #e8c766;
+  border: 1px solid rgba(232,199,102,0.45);
+  background: rgba(232,199,102,0.08);
+}
+
 .judge-sub {
   font-size: 12px;
   color: var(--muted);
